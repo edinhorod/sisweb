@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Agiledw.SiSWeb.Dominio.Entidades.Administrador>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<!--INICIO TITULO-->
+<div class="row">
+    <div class="col-md-12">
+        <h4 class="page-head-line">Administradores</h4>
+    </div>
+</div>
+<!--FIM TITULO-->
+
+<p>
+    <!---->
+    @Html.ActionLink("Novo administrador", "NovoAdministrador", "Alterar", new { @class = "btn btn-primary" })
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th class="text-left">Nome</th>
+            <th class="text-center">E-mail/Login</th>
+            <th class="text-center">Último Acesso</th>
+            <th class="text-center">Tipo</th>
+            <th class="text-center">Opções</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr id="row-@item.Id">
+                <td class="text-left">
+                    @*@Html.ActionLink(item.Nome, "Alterar", new { item.Id })*@
+                    @item.Nome
+                </td>
+                <td class="text-center">
+                    @item.Email
+                </td>
+                <td class="text-center">
+                    @item.UltimoAcesso.ToShortDateString()
+                </td>
+                <td class="text-center">
+                    @if (item.Tipo == 1)
+                    {
+                        <span style="color: green; font-weight: bold;">Administrador</span>
+                        Html.DisplayText("Administrador");
+                    }
+                    else if (item.Tipo == 2)
+                    {
+                        <span style="color: red; font-weight: bold">Usuário</span>
+                    }
+
+                    @*@Html.ActionLink(item.Nome, "Alterar", new { item.Id })*@
+                </td>
+
+                <td class="text-center">
+                    @Html.ActionLink(" ", "Alterar", "Administradores", new { Id = item.Id },
+                    new
+                    {
+                        @class = "btn btn-link btn-md glyphicon glyphicon-edit",
+                        title = "Alterar item"
+                    })
+                    @Html.ActionLink(" ", "Excluir", "Administradores", new { Id = item.Id },
+                    new
+                    {
+                        @class = "btn btn-link btn-md glyphicon glyphicon-remove",
+                        title = "Excluir item"
+                    })
+                    
+                    
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
