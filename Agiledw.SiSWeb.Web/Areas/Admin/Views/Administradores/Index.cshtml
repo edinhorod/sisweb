@@ -64,16 +64,18 @@
                         @class = "btn btn-link btn-md glyphicon glyphicon-edit",
                         title = "Alterar item"
                     })
-                    @Html.ActionLink(" ", "Excluir", "Administradores", new { Id = item.Id },
-                    new
-                    {
-                        @class = "btn btn-link btn-md glyphicon glyphicon-remove",
-                        title = "Excluir item"
-                    })
-                    
-                    
+                    @*@Html.ActionLink(" ", "Excluir", "Administradores", new { Id = item.Id },
+                        new
+                        {
+                            @class = "btn btn-link btn-xs glyphicon glyphicon-remove",
+                            title = "Excluir item"
+                        })*@
+                    <button class="btn btn-link btn-xs glyphicon glyphicon-remove" type="submit" name="@item.Nome" 
+                            title="Excluir @item.Nome" id="@item.Id"></button>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+@Html.Partial("Confirmacao")

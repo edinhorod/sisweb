@@ -1,0 +1,77 @@
+﻿<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Exclusão</h4>
+            </div>
+
+            <div class="modal-body">
+                <input type="hidden" />
+                <p>Deseja excluir o produto <em><strong>"<span></span>"</strong></em>? </p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Confirmar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+
+        </div><!-- /.modal-content -->
+
+    </div><!-- /.modal-dialog -->
+
+</div><!-- /.modal -->
+
+<script>
+    $(function () {
+        //Abrir modal
+        $(".btn-xs").click(function (e) {
+            e.preventDefault();
+            var id = this.id;
+            var nome = this.name;
+            //Recuperando o id do produto e jogando no botão input dentro do modal-body
+            $("#deleteModal .modal-body input[type=hidden]").val(id);
+
+            //Recuperando o nome do produto e jogando no span dentro do modal-body
+            $("#deleteModal .modal-body span").text(nome);
+
+            //Mostrando o modal
+            $("#deleteModal").modal('show');
+        });
+
+        //Botão confirmar exclusão
+        $("#deleteModal .modal-footer button").click(function (e) {
+            e.preventDefault();
+            var url = "Admin/Administradores/Excluir/";
+            var id = $(".modal-body input[type=hidden]").val();
+            var rowNo = "#row-" + id;
+            $.ajax({
+                url: url,
+                type: 'post',
+                dataType: 'json',
+                data: { produtoId: id },
+                beforeSend: function () {
+                    var loading = "<span id='loading'><em>Excluindo</em>&nbsp;<i class='glyphicon glyphicon-refresh icon-refersh-animate'></i></span>";
+                    $('#deleteModal .modal-header h4').after(loading);
+                },
+
+                success: function () {
+                    $('#deleteModal').modal('hide');
+                    $(rowNo).animate({ opacity: 0.0 }, 400, function () {
+                        $(rowNo).remove();
+                    });
+                },
+
+                complete: function (data) {
+                    $('#divexcluir').empty();
+                    $('#divexcluir').addClass("alert alert-success");
+                    $('#divexcluir').html(data.responseText);
+                    $('#loading').remove();
+                }
+
+            });
+        });
+    });
+</script>

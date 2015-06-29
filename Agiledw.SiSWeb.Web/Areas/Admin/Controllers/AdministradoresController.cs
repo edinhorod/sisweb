@@ -16,8 +16,9 @@ namespace Agiledw.SiSWeb.Web.Areas.Admin.Controllers
             _repositorio = new AdministradoresRepositorio();
             var administradores = _repositorio.Administradores;
             return View(administradores);
-        }        
+        }
 
+        //SELECIONAR ADMINISTRADOR PELO ID
         public ViewResult Alterar(int Id)//Nome da variável tem que ser o mesmo nome do Id da página Index
         {
             _repositorio = new AdministradoresRepositorio();
@@ -25,6 +26,7 @@ namespace Agiledw.SiSWeb.Web.Areas.Admin.Controllers
             return View(administrador);
         }
 
+        //ALTERAR ADMINISTRADOR
         [HttpPost]
         public ActionResult Alterar(Administrador administrador, HttpPostedFileBase image = null)
         {
@@ -44,9 +46,36 @@ namespace Agiledw.SiSWeb.Web.Areas.Admin.Controllers
             return View(administrador);
         }
 
+        //OBTER IMAGEM
+        public FileContentResult ObterImagem(int Id)
+        {
+            _repositorio = new AdministradoresRepositorio();
+            Administrador admin = _repositorio.Administradores.FirstOrDefault(a => a.Id == Id);
+            if(admin!=null)
+            {
+                return File(admin.Imagem, admin.ImagemMimeType);
+            }
+            return null;
+        }
+
+        //GRAVAR NOVO ADMINISTRADOR
         public ViewResult NovoAdministrador()
         {
             return View("Alterar", new Administrador());
+        }
+
+        //EXCLUIR ADMINISTRADOR
+        [HttpPost]
+        public JsonResult Excluir(int Id)
+        {
+            string mensagem = string.Empty;
+            _repositorio = new AdministradoresRepositorio();
+            Administrador admin = _repositorio.Excluir(Id);
+            if (admin != null)
+            {
+                mensagem = string.Format("{0} excluído com sucesso", admin.Nome);
+            }
+            return Json(mensagem, JsonRequestBehavior.AllowGet);
         }
     }
 }
