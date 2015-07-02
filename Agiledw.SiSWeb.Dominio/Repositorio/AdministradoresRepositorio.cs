@@ -1,5 +1,6 @@
 ﻿using Agiledw.SiSWeb.Dominio.Entidades;
 using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace Agiledw.SiSWeb.Dominio.Repositorio
 {
@@ -7,6 +8,7 @@ namespace Agiledw.SiSWeb.Dominio.Repositorio
     {
         private readonly EfDbContext _context = new EfDbContext();
 
+        //LISTAR TODOS OS ADMINISTRADORES
         public IEnumerable<Entidades.Administrador> Administradores
         {
             get { return _context.Administradores; }
@@ -28,7 +30,7 @@ namespace Agiledw.SiSWeb.Dominio.Repositorio
                     admin.Nome = administrador.Nome;
                     admin.Email = administrador.Email;
                     admin.Senha = administrador.Senha;
-                    //admin.UltimoAcesso = administrador.UltimoAcesso;
+                    admin.UltimoAcesso = administrador.UltimoAcesso;
                     admin.Tipo = administrador.Tipo;
                     admin.Imagem = administrador.Imagem;
                     admin.ImagemMimeType = administrador.ImagemMimeType;

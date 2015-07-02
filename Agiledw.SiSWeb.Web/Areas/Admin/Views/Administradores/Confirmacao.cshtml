@@ -44,14 +44,14 @@
         //Botão confirmar exclusão
         $("#deleteModal .modal-footer button").click(function (e) {
             e.preventDefault();
-            var url = "Admin/Administradores/Excluir/";
+            var url = "Excluir/";//Endereço do Controller de exclusão
             var id = $(".modal-body input[type=hidden]").val();
             var rowNo = "#row-" + id;
             $.ajax({
                 url: url,
                 type: 'post',
                 dataType: 'json',
-                data: { produtoId: id },
+                data: {Id: id },
                 beforeSend: function () {
                     var loading = "<span id='loading'><em>Excluindo</em>&nbsp;<i class='glyphicon glyphicon-refresh icon-refersh-animate'></i></span>";
                     $('#deleteModal .modal-header h4').after(loading);
